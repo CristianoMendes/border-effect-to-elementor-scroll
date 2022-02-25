@@ -1,0 +1,48 @@
+<script>
+	let	percent = 0.12;
+	let border_color = #fff;
+
+	$('#remove_border').css({
+		'border-left-width' : $(this).width() * percent,
+		'border-right-width' : $(this).width() * percent,
+		'border-color' : border_color
+	});
+
+	$(window).scroll(function() {
+		var scrollTop = $(this).scrollTop() + 450;
+
+		var calc = function(_this){
+			var elementHeight = $(_this).height(),
+			elementWidth = $(_this).width() * percent,
+			borderWidth = ((elementHeight - scrollTop) / elementHeight) * elementWidth ;
+			
+			console.table({
+				'scrollTop' : scrollTop,
+				'elementWidth' : elementWidth,
+				'elementHeight' : elementHeight,
+				'borderWidth' : borderWidth
+			});
+
+			if ( borderWidth < 1 ) {
+				return 0;
+			} else {
+				return borderWidth;
+			}
+		}
+
+		$('#remove_border').css({
+			borderLeftWidth: function() {
+				return calc(this);
+			},
+			borderRightWidth: function() {
+				return calc(this);
+			}
+		});
+	});
+</script>
+<style>
+	#remove_border {
+		transition-timing-function: linear;
+		transition-delay: 0;
+	}
+</style>
